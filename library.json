@@ -1,0 +1,31 @@
+{
+    "name": "Epdiy-Monochrome",
+    "version": "1.0.0",
+    "description": "EPDiy in simple monochrome mode",
+    "keywords": "eink, epaper, epdiy, monochrome",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/ashald/platformio-epdiy-monochrome"
+    },
+    "authors":
+    [
+        {
+            "name": "Borys Pierov",
+            "email": "platformio-epdiy-monochrome@ashald.net",
+            "url": "https://ashald.net/",
+            "maintainer": true
+        }
+    ],
+    "license": "Unlicense",
+    "homepage": "https://github.com/ashald/platformio-epdiy-monochrome",
+    "dependencies":
+    [
+        {
+            "name": "epdiy",
+            "version": "https://github.com/vroland/epdiy.git"
+        }
+    ],
+    "frameworks": "*",
+    "platforms": "*"
+}
