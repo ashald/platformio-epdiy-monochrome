@@ -13,6 +13,9 @@
 
 static const uint8_t ROW_DELAY = 30;
 
+static const uint8_t BUFFER_BLACK = 0xFF;
+static const uint8_t BUFFER_WHITE = 0x00;
+
 // 0..255, in binary form, 0s replaced with WHITE, and 1s with BLACK
 static const uint16_t lookup[] = {
     0xAAAA, 0xAAA9, 0xAAA6, 0xAAA5, 0xAA9A, 0xAA99, 0xAA96, 0xAA95, 0xAA6A,
@@ -109,11 +112,11 @@ static void eink_draw(uint8_t* buffer) {
 }
 
 void eink_buffer_clear(uint8_t* buffer) {
-  memset(buffer, 0x00, EINK_BUFFER_SIZE);
+  memset(buffer, BUFFER_WHITE, EINK_BUFFER_SIZE);
 }
 
 void eink_buffer_set(uint8_t* buffer, bool value) {
-  uint8_t color = value ? BLACK : WHITE;
+  uint8_t color = value ? BUFFER_BLACK : BUFFER_WHITE;
   memset(buffer, color, EINK_BUFFER_SIZE);
 }
 
