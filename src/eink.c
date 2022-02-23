@@ -11,7 +11,7 @@
 #define WHITE 0b10101010 // 0xAA
 #define BLACK 0b01010101 // 0x55
 
-static const uint8_t ROW_DELAY = 30;
+static const uint8_t ROW_DELAY = 120;
 
 static const uint8_t BUFFER_BLACK = 0xFF;
 static const uint8_t BUFFER_WHITE = 0x00;
