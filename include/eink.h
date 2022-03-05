@@ -18,8 +18,11 @@ void eink_set_pixel(uint32_t x, uint32_t y, bool value, uint8_t* buffer);
 // flush screen with given color by filling it 10 times
 void eink_flush(bool value);
 
-// render buffer by drawing it 10 times
+// render buffer
 void eink_render(uint8_t* buffer);
+
+// render buffer with pixels inverted (black for white, and white for black)
+void eink_render_advanced(uint8_t* buffer, uint8_t cycles, bool inverse);
 
 // initialize peripherals required to operate display, does not affect power consumption
 void eink_init();

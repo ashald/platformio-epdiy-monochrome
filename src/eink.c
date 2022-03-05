@@ -12,6 +12,7 @@
 #define BLACK 0b01010101 // 0x55
 
 static const uint8_t ROW_DELAY = 120;
+static const uint8_t UPDATE_CYCLES = 16;
 
 static const uint8_t BUFFER_BLACK = 0xFF;
 static const uint8_t BUFFER_WHITE = 0x00;
@@ -81,7 +82,7 @@ static void eink_fill(uint8_t color) {
   epd_end_frame();
 }
 
-static void eink_draw(uint8_t* buffer) {
+static void eink_draw(uint8_t* buffer, bool inverse) {
   uint16_t row[EPD_LINE_BYTES/2] = {0};
 
   epd_start_frame();
@@ -92,7 +93,8 @@ static void eink_draw(uint8_t* buffer) {
     // 1x8PpB = 2x4PpB = 1 word
     for (uint32_t word = 0; word < EPD_LINE_BYTES/2; word++) {
       uint8_t pixels_1bpp = buffer[y * EPD_LINE_BYTES/2 + word];
-      uint16_t pixels_2bpp =lookup[pixels_1bpp];  // translate into 2-bits-per-pixel
+      uint8_t lookup_index = inverse ? 255 - pixels_1bpp : pixels_1bpp;
+      uint16_t pixels_2bpp = lookup[lookup_index];  // translate into 2-bits-per-pixel
       row[word] = pixels_2bpp;
     }
 
@@ -126,14 +128,20 @@ void eink_set_pixel(uint32_t x, uint32_t y, bool value, uint8_t* buffer) {
 
 void eink_flush(bool value) {
   uint8_t color = value ? BLACK : WHITE;
-  for (int i = 0; i < 10; i++) {
+  for (uint8_t i = 0; i < UPDATE_CYCLES; i++) {
     eink_fill(color);
   }
 }
 
 void eink_render(uint8_t* buffer) {
-  for (int i = 0; i < 10; i++) {
-    eink_draw(buffer);
+  for (uint8_t i = 0; i < UPDATE_CYCLES; i++) {
+    eink_draw(buffer, false);
+  }
+}
+
+void eink_render_advanced(uint8_t* buffer, uint8_t cycles, bool inverse) {
+  for (uint8_t i = 0; i < cycles; i++) {
+    eink_draw(buffer, inverse);
   }
 }
 
